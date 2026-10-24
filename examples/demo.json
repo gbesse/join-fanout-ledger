@@ -1,0 +1,28 @@
+{
+  "left": [
+    {
+      "id": "sale1",
+      "key": "a",
+      "amount_cents": 1000
+    },
+    {
+      "id": "sale2",
+      "key": null,
+      "amount_cents": 500
+    }
+  ],
+  "right": [
+    {
+      "id": "tag1",
+      "key": "a"
+    },
+    {
+      "id": "tag2",
+      "key": "a"
+    },
+    {
+      "id": "unknown",
+      "key": null
+    }
+  ]
+}

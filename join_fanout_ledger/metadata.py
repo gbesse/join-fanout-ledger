@@ -1,0 +1,1 @@
+DESCRIPTION = {'fr': 'Expliquer pourquoi une jointure multiplie un montant métier', 'en': 'Explain why a join multiplies a business amount', 'es': 'Explicar por qué una unión multiplica un importe de negocio'}
