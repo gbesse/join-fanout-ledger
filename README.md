@@ -72,3 +72,12 @@ Pruebas de dominio, casos límite e interfaz FR/EN/ES. CI prueba Python 3.11/3.1
 ## Sources / Fuentes
 
 - https://www.sqlite.org/lang_select.html
+
+
+## 2026-11-05 — FR / EN / ES
+
+FR : Ajout d’un témoin EXISTS exécuté sur SQLite et d’un total des lignes sans correspondance. Ces deux montants retrouvent le total initial sans multiplier les lignes ; les clés NULL restent non jointes.
+
+EN: Adds an actual SQLite EXISTS control and unmatched-row total. Together they recover the original total without multiplying rows; NULL keys remain unmatched.
+
+ES: Añade control EXISTS ejecutado en SQLite y total sin correspondencia. Ambos recuperan total original sin multiplicar filas; claves NULL siguen sin unión.
