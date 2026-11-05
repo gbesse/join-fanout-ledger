@@ -11,5 +11,7 @@ def run(data):
  try:
   c.executescript('CREATE TABLE l(id TEXT PRIMARY KEY,k TEXT,amount INTEGER);CREATE TABLE r(id TEXT PRIMARY KEY,k TEXT);');c.executemany('INSERT INTO l VALUES (?,?,?)',L);c.executemany('INSERT INTO r VALUES (?,?)',R)
   rows=[{'id':id,'key':k,'original_cents':amount,'matched_right_rows':count,'joined_contribution_cents':amount*max(1,count),'extra_cents':amount*(max(1,count)-1)}for id,k,amount,count in c.execute('SELECT l.id,l.k,l.amount,COUNT(r.id) FROM l LEFT JOIN r ON l.k=r.k GROUP BY l.id ORDER BY l.id')];baseline=c.execute('SELECT COALESCE(SUM(amount),0)FROM l').fetchone()[0];joined=c.execute('SELECT COALESCE(SUM(l.amount),0)FROM l LEFT JOIN r ON l.k=r.k').fetchone()[0]
-  return {'left_total_cents':baseline,'left_join_total_cents':joined,'fanout_delta_cents':joined-baseline,'rows':rows,'model':'native_sqlite_left_equality_join_one_declared_amount_unit','sqlite_version':sqlite3.sqlite_version}
+  semijoin=c.execute('SELECT COALESCE(SUM(amount),0) FROM l WHERE EXISTS(SELECT 1 FROM r WHERE r.k=l.k)').fetchone()[0]
+  unmatched=c.execute('SELECT COALESCE(SUM(amount),0) FROM l WHERE NOT EXISTS(SELECT 1 FROM r WHERE r.k=l.k)').fetchone()[0]
+  return {'matched_once_total_cents':semijoin,'unmatched_total_cents':unmatched,'matched_left_rows':sum(r['matched_right_rows']>0 for r in rows),'left_total_cents':baseline,'left_join_total_cents':joined,'fanout_delta_cents':joined-baseline,'rows':rows,'model':'native_sqlite_left_equality_join_one_declared_amount_unit','sqlite_version':sqlite3.sqlite_version}
  finally:c.close()
